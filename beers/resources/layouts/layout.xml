@@ -1,12 +1,25 @@
 <layout id="MainLayout" background="Graphics.COLOR_BLACK">
-    <label id="clock" x="center" y="40" font="Graphics.FONT_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="clock" x="center" y="30" font="Graphics.FONT_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     <label id="beers_total_label" x="center" y="240" font="Graphics.FONT_XTINY" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_RED"/>
     <label id="beers_session_label" x="center" y="210" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
     
-    <bitmap id="place0" x="10" y="center" filename="../images/0.png" />
-    <bitmap id="place1" x="50" y="center" filename="../images/0.png" />
-    <bitmap id="place2" x="90" y="center" filename="../images/0.png" />
-    <bitmap id="place3" x="130" y="center" filename="../images/0.png" />
-    <bitmap id="place4" x="170" y="center" filename="../images/0.png" />
-    <bitmap id="place5" x="210" y="center" filename="../images/0.png" />
+    <label id="beer_label" x="10" y="95" text="Beers:" font="Graphics.FONT_XTINY" color="Graphics.COLOR_DK_GRAY" />
+    <label id="snyt_label" x="10" y="135" text="Šnyts:" font="Graphics.FONT_XTINY" color="Graphics.COLOR_DK_GRAY" />
+    <label id="shot_label" x="10" y="175" text="Shots:" font="Graphics.FONT_XTINY" color="Graphics.COLOR_DK_GRAY" />
+
+    <bitmap id="r0c0" x="55" y="90" filename="../images/0.png" />
+    <bitmap id="r0c1" x="95" y="90" filename="../images/0.png" />
+    <bitmap id="r0c2" x="135" y="90" filename="../images/0.png" />
+    <bitmap id="r0c3" x="175" y="90" filename="../images/0.png" />
+
+    <bitmap id="r1c0" x="55" y="130" filename="../images/0.png" />
+    <bitmap id="r1c1" x="95" y="130" filename="../images/0.png" />
+    <bitmap id="r1c2" x="135" y="130" filename="../images/0.png" />
+    <bitmap id="r1c3" x="175" y="130" filename="../images/0.png" />
+
+    <bitmap id="r2c0" x="55" y="170" filename="../images/0.png" />
+    <bitmap id="r2c1" x="95" y="170" filename="../images/0.png" />
+    <bitmap id="r2c2" x="135" y="170" filename="../images/0.png" />
+    <bitmap id="r2c3" x="175" y="170" filename="../images/0.png" />
+
 </layout>

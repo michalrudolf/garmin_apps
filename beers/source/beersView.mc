@@ -8,7 +8,9 @@ import Toybox.Time;
 
 enum prop_keys {
     TOTAL = "beers_total_prop_id",
-    SESSION = "beers_session_prop_id"
+    SESSION = "beers_session_prop_id",
+    SNYT = "snyt_session_prop_id",
+    SHOT = "shot_session_prop_id"
 }
 
 
@@ -16,13 +18,25 @@ class beersView extends WatchUi.View {
     private var IMAGES = new Array<Number>[6];
     private var update_timer;
     
-    private const PLACE_KEYS = [
-        "place0",
-        "place1",
-        "place2",
-        "place3",
-        "place4",
-        "place5"
+    private const ROW0 = [
+        "r0c0",
+        "r0c1",
+        "r0c2",
+        "r0c3"
+    ];
+
+    private const ROW1 = [
+        "r1c0",
+        "r1c1",
+        "r1c2",
+        "r1c3"
+    ];
+
+    private const ROW2 = [
+        "r2c0",
+        "r2c1",
+        "r2c2",
+        "r2c3"
     ];
 
     private const IMAGE_RES = [
@@ -56,18 +70,33 @@ class beersView extends WatchUi.View {
         }
     }
     
-    private function update_drawables(dc as Dc) as Void {
-        var session = Properties.getValue($.SESSION);
-        for (var i = 0; i < 6; i++) {
-            var res;
-            if (session >= (i+1) * 5) {
-                res = IMAGES[5];
-            } else if (session <= i * 5) {
-                res = IMAGES[0];
+    private function update_drawables(prop_id as String, PLACE_KEYS, dc as Dc) as Void {
+        var value = Properties.getValue(prop_id);
+        while (value > 20) {
+            value -= 20;
+        }
+
+        if (value < 11) {
+            update_drawable(PLACE_KEYS[0], IMAGES[0], dc);
+            if (value < 6) {
+                update_drawable(PLACE_KEYS[1], IMAGES[value % 6], dc);
+                update_drawable(PLACE_KEYS[2], IMAGES[0], dc);
             } else {
-                res = IMAGES[session - i * 5];
+                update_drawable(PLACE_KEYS[1], IMAGES[5], dc);
+                update_drawable(PLACE_KEYS[2], IMAGES[(value - 5) % 6], dc);
             }
-            update_drawable(PLACE_KEYS[i], res, dc);
+            update_drawable(PLACE_KEYS[3], IMAGES[0], dc);
+        } else {
+            var r = value - 10;
+            update_drawable(PLACE_KEYS[0], IMAGES[5], dc);
+            update_drawable(PLACE_KEYS[1], IMAGES[5], dc);
+            if (r < 6) {
+                update_drawable(PLACE_KEYS[2], IMAGES[r % 6], dc);
+                update_drawable(PLACE_KEYS[3], IMAGES[0], dc);
+            } else {
+                update_drawable(PLACE_KEYS[2], IMAGES[5], dc);
+                update_drawable(PLACE_KEYS[3], IMAGES[(r - 5) % 6], dc);
+            }
         }
     }
     
@@ -115,7 +144,9 @@ class beersView extends WatchUi.View {
     function onUpdate(dc) as Void {
         update_label("beers_total_label", get_display_string("Total", $.TOTAL));
         update_label("beers_session_label", get_display_string("Session", $.SESSION));
-        update_drawables(dc);
+        update_drawables($.SESSION, ROW0, dc);
+        update_drawables($.SNYT, ROW1, dc);
+        update_drawables($.SHOT, ROW2, dc);
         update_time();
         
         View.onUpdate(dc);
@@ -145,6 +176,8 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
     
     private function reset_session() as Void {
         Properties.setValue($.SESSION, 0);
+        Properties.setValue($.SNYT, 0);
+        Properties.setValue($.SHOT, 0);
         WatchUi.requestUpdate();
         // Reset images
     }
@@ -154,8 +187,14 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
             increment_property($.TOTAL);
             increment_property($.SESSION);
             return true;
+        } else if (evt.getKey() == WatchUi.KEY_UP) {
+            increment_property($.SNYT);
+            return true;    
         } else if (evt.getKey() == WatchUi.KEY_DOWN) {
-            reset_session();    
+            increment_property($.SHOT);
+            return true;    
+        } else if (evt.getKey() == WatchUi.KEY_LIGHT) {
+            reset_session();
         }
         return false;
     }
