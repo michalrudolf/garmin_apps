@@ -1,0 +1,12 @@
+<layout id="MainLayout" background="Graphics.COLOR_BLACK">
+    <label id="clock" x="center" y="40" font="Graphics.FONT_MEDIUM" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="beers_total_label" x="center" y="240" font="Graphics.FONT_XTINY" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_RED"/>
+    <label id="beers_session_label" x="center" y="210" font="Graphics.FONT_TINY" justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    
+    <bitmap id="place0" x="10" y="center" filename="../images/0.png" />
+    <bitmap id="place1" x="50" y="center" filename="../images/0.png" />
+    <bitmap id="place2" x="90" y="center" filename="../images/0.png" />
+    <bitmap id="place3" x="130" y="center" filename="../images/0.png" />
+    <bitmap id="place4" x="170" y="center" filename="../images/0.png" />
+    <bitmap id="place5" x="210" y="center" filename="../images/0.png" />
+</layout>

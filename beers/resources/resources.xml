@@ -1,0 +1,9 @@
+<resources>
+    <bitmap id="LauncherIcon" filename="images/launcher_icon.png" />
+    <bitmap id="res0" filename="images/0.png" />
+    <bitmap id="res1" filename="images/1.png" />
+    <bitmap id="res2" filename="images/2.png" />
+    <bitmap id="res3" filename="images/3.png" />
+    <bitmap id="res4" filename="images/4.png" />
+    <bitmap id="res5" filename="images/5.png" />
+</resources>
