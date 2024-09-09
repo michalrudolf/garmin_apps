@@ -8,22 +8,20 @@ import Toybox.Time;
 
 enum prop_keys {
     TOTAL = "beers_total_prop_id",
-    SESSION = "beers_session_prop_id"
+    SESSION = "beers_session_prop_id",
 }
 
-
 class beersView extends WatchUi.View {
-    private var IMAGES = new Array<Number>[6];
+    private var IMAGES;
     private var update_timer;
     
-    private const PLACE_KEYS = [
-        "place0",
-        "place1",
-        "place2",
-        "place3",
-        "place4",
-        "place5"
+    private const ROW0 = [
+        "r0c0",
+        "r0c1",
+        "r0c2",
+        "r0c3"
     ];
+
 
     private const IMAGE_RES = [
         $.Rez.Drawables.res0,
@@ -45,7 +43,6 @@ class beersView extends WatchUi.View {
             WatchUi.loadResource(IMAGE_RES[4]),
             WatchUi.loadResource(IMAGE_RES[5])
         ];
-
     }
 
     
@@ -57,24 +54,39 @@ class beersView extends WatchUi.View {
     }
     
     private function update_drawables(dc as Dc) as Void {
-        var session = Properties.getValue($.SESSION);
-        for (var i = 0; i < 6; i++) {
-            var res;
-            if (session >= (i+1) * 5) {
-                res = IMAGES[5];
-            } else if (session <= i * 5) {
-                res = IMAGES[0];
+        var value = Properties.getValue($.SESSION);
+        while (value > 20) {
+            value -= 20;
+        }
+
+        if (value < 11) {
+            update_drawable(0, 0, dc);
+            if (value < 6) {
+                update_drawable(1, value % 6, dc);
+                update_drawable(2, 0, dc);
             } else {
-                res = IMAGES[session - i * 5];
+                update_drawable(1, 5, dc);
+                update_drawable(2, (value - 5) % 6, dc);
             }
-            update_drawable(PLACE_KEYS[i], res, dc);
+            update_drawable(3, 0, dc);
+        } else {
+            var r = value - 10;
+            update_drawable(0, 5, dc);
+            update_drawable(1, 5, dc);
+            if (r < 6) {
+                update_drawable(2, r % 6, dc);
+                update_drawable(3, 0, dc);
+            } else {
+                update_drawable(2, 5, dc);
+                update_drawable(3, (r - 5) % 6, dc);
+            }
         }
     }
     
-    private function update_drawable(drawable_id as String, res, dc as Dc) as Void {
-        var drawable = View.findDrawableById(drawable_id);
+    private function update_drawable(place_idx as Number, res_idx as Number, dc as Dc) as Void {
+        var drawable = View.findDrawableById(ROW0[place_idx]);
         if (drawable != null) {
-            (drawable as Bitmap).setBitmap(res);
+            (drawable as Bitmap).setBitmap(IMAGES[res_idx]);
         }
     }
 
@@ -134,10 +146,10 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
         BehaviorDelegate.initialize();
     }
 
-    private function increment_property(property_id as PropertyKeyType) as Void {
+    private function adjust_property(property_id as PropertyKeyType, diff as Number) as Void {
         var int = Properties.getValue(property_id);
         if (int instanceof Number) {
-            int++;
+            int += diff;
             Properties.setValue(property_id, int);
         }
         WatchUi.requestUpdate();
@@ -146,17 +158,21 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
     private function reset_session() as Void {
         Properties.setValue($.SESSION, 0);
         WatchUi.requestUpdate();
-        // Reset images
     }
 
     public function onKey(evt as KeyEvent) as Boolean {
         if (evt.getKey() == WatchUi.KEY_ENTER) {
-            increment_property($.TOTAL);
-            increment_property($.SESSION);
+            adjust_property($.TOTAL, 1);
+            adjust_property($.SESSION, 1);
             return true;
-        } else if (evt.getKey() == WatchUi.KEY_DOWN) {
-            reset_session();    
+        } else if (evt.getKey() == WatchUi.KEY_LAP) {
+            reset_session();
+        } else if (evt.getKey() == WatchUi.KEY_LIGHT) {
+            if (Properties.getValue($.SESSION) > 0) {
+                adjust_property($.TOTAL, -1);
+                adjust_property($.SESSION, -1);
+            }
         }
         return false;
     }
-}
+ }
