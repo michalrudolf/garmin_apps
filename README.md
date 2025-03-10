@@ -7,3 +7,6 @@ My collection of garmin apps, widgets, faces or data fields.
 1) Download beers.prg in the [releases](https://github.com/michalrudolf/garmin_apps/releases) that is build for your Garmin watch
 2) Mount your Garmin watch and go to folder garmin/APPS/
 3) Drag and drop prg file there
+
+# Disclaimer
+This is a fun little project for my friends. I plan to expand this and add other languages (right now texts are in Czech) and publish it on ConnectIQ store.
