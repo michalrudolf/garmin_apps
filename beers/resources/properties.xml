@@ -2,19 +2,42 @@
     <properties>
         <property id="beers_total_prop_id" type="number">0</property>
         <property id="beers_session_prop_id" type="number">0</property>
+    
+        <property id="snyts_total_prop_id" type="number">0</property>
+        <property id="snyts_session_prop_id" type="number">0</property>
+    
+        <property id="shots_total_prop_id" type="number">0</property>
+        <property id="shots_session_prop_id" type="number">0</property>
     </properties>
 
+
     <strings>
-       <string id="beers_total_str_id">Total</string>
-       <string id="beers_session_str_id">Session</string>
+       <string id="total_str_id">Total</string>
+       <string id="session_str_id">Session</string>
     </strings>
 
     <settings>
-        <setting propertyKey="@Properties.beers_total_prop_id" title="@Strings.beers_total_str_id">
+        <setting propertyKey="@Properties.beers_total_prop_id" title="@Strings.total_str_id">
             <settingConfig type="numeric" />
         </setting>
 
-        <setting propertyKey="@Properties.beers_session_prop_id" title="@Strings.beers_session_str_id">
+        <setting propertyKey="@Properties.beers_session_prop_id" title="@Strings.session_str_id">
+            <settingConfig type="numeric" />
+        </setting>
+
+        <setting propertyKey="@Properties.snyts_total_prop_id" title="@Strings.total_str_id">
+            <settingConfig type="numeric" />
+        </setting>
+
+        <setting propertyKey="@Properties.snyts_session_prop_id" title="@Strings.session_str_id">
+            <settingConfig type="numeric" />
+        </setting>
+
+        <setting propertyKey="@Properties.shots_total_prop_id" title="@Strings.total_str_id">
+            <settingConfig type="numeric" />
+        </setting>
+
+        <setting propertyKey="@Properties.shots_session_prop_id" title="@Strings.session_str_id">
             <settingConfig type="numeric" />
         </setting>
     </settings>

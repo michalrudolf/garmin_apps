@@ -1,0 +1,66 @@
+<layout id="Layout">
+    <!-- Random message at top -->
+    <label id="message_label"
+           x="center"
+           y="70"
+           font="Graphics.FONT_XTINY"
+           color="Graphics.COLOR_LT_GRAY"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" />
+    
+    <!-- Funky time display -->
+    <label id="clock"
+           x="center"
+           y="30"
+           color="Graphics.COLOR_WHITE"
+           font="Graphics.FONT_SMALL"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" />
+        
+    <!-- Drink type icons -->
+    <bitmap id="drink_icon"
+           x="10"
+           y="110"
+           filename="images/icon_beer.png" />
+                      
+    <!-- Row 0 bitmaps -->
+    <bitmap id="r0c0" x="55" y="120" filename="images/0.png" />
+    <bitmap id="r0c1" x="95" y="120" filename="images/0.png" />
+    <bitmap id="r0c2" x="135" y="120" filename="images/0.png" />
+    <bitmap id="r0c3" x="175" y="120" filename="images/0.png" />
+    
+    <!-- Total and Session labels -->
+    <label id="total_label"
+           x="center"
+           y="230"
+           font="Graphics.FONT_XTINY"
+           color="Graphics.COLOR_RED"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" />
+           
+    <label id="session_label"
+           x="center"
+           y="200"
+           font="Graphics.FONT_TINY"
+           color="Graphics.COLOR_WHITE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" />
+           
+    <!-- Reset labels -->
+    <label id="reset_session_label"
+           x="center"
+           y="center"
+           font="Graphics.FONT_MEDIUM"
+           color="Graphics.COLOR_WHITE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" />
+           
+    <label id="reset_session_hard_label"
+           x="center"
+           y="center"
+           font="Graphics.FONT_MEDIUM"
+           color="Graphics.COLOR_WHITE"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" />
+           
+    <label id="reset_all_label"
+           x="center"
+           y="center"
+           font="Graphics.FONT_MEDIUM"
+           color="Graphics.COLOR_RED"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" />
+</layout> 

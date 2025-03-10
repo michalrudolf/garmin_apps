@@ -6,4 +6,14 @@
     <bitmap id="res3" filename="images/3.png" />
     <bitmap id="res4" filename="images/4.png" />
     <bitmap id="res5" filename="images/5.png" />
+    
+    <!-- Add drink type icons -->
+    <bitmap id="resBeer" filename="images/icon_beer.png" />
+    <bitmap id="resSnyt" filename="images/icon_snyt.png" />
+    <bitmap id="resShot" filename="images/icon_shot.png" />
+    
+    
+    <layouts>
+        <layout id="Layout">resources/layout.xml</layout>
+    </layouts>
 </resources>
