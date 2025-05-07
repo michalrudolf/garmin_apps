@@ -106,7 +106,7 @@ class beersView extends WatchUi.View {
             "Pivní opojení <3",
             "Měl bys přidat,",
             "A ještě do druhý nohy!",
-            "A jeětě za babičku!",
+            "A ještě za babičku!",
             "Už tě brní zubý?",
             "Nečum a chlastej!",
             "Zlijem se jak dobytci!",
@@ -328,14 +328,19 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
     }
 
     public function onKey(evt as KeyEvent) as Boolean {
-        if (evt.getKey() == WatchUi.KEY_ENTER) {
+        var key = evt.getKey();
+        if (key == WatchUi.KEY_ESC || key == WatchUi.KEY_BACK || key == WatchUi.KEY_MENU) {
+            System.exit();
+            return true;
+        }
+        if (key == WatchUi.KEY_ENTER) {
             if (index < 3) {
                 adjust_property(TOTAL_PROP_KEYS[index], 1);
                 adjust_property(SESSION_PROP_KEYS[index], 1);
                 message_change = true;
             } else if (index == 3) {
                 reset_session();
-                return true;
+                index = 0;
             } else if (index == 4) {
                 reset_session_hard();
                 index = 0;
@@ -343,16 +348,14 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
                 reset_all();
                 index = 0;
             }
-        } else if (evt.getKey() == WatchUi.KEY_DOWN) {
+        } else if (key == WatchUi.KEY_DOWN) {
             index = (index + 1) % MENU_SIZE;
-        } else if (evt.getKey() == WatchUi.KEY_UP) {
+        } else if (key == WatchUi.KEY_UP) {
             if (index - 1 < 0) {
                 index = MENU_SIZE - 1;
             } else {
                 index -= 1;
             }
-        } else if (evt.getKey() == WatchUi.KEY_ESC) {
-            System.exit();
         }
         WatchUi.requestUpdate();
         return true;
