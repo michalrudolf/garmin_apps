@@ -23,6 +23,7 @@ class beersView extends WatchUi.View {
     private var drunkMessages;
     private var currentMessageIndex;
     private var layoutSet = false;
+    private var messageVisibleUntil = null; // Time (in seconds) until which the message is visible
 
     private const ROW0 = [
         "r0c0",
@@ -78,38 +79,71 @@ class beersView extends WatchUi.View {
             "Kde máš peněženku?",
             "Zítra budeš litovat!",
             "Ty si borec!",
-            "Hlavně se nezblij,",
+            "Hlavně se nezblij",
             "Kde máš klíče?",
             "Ještě jedno!",
             "Hlavně, že máš pivo vole!",
             "Doufam, že to je Plzeň!",
-            "Nezapomeň hydratovat,",
+            "Nezapomeň hydratovat",
             "Kolik ještě, ty blázne?",
             "Už z toho je větrák...",
-            "Ten náš zlatavý mok,",
+            "Ten náš zlatavý mok",
             "Čas se vylejt!",
             "Až do dna!",
             "Dej si šplívo!",
             "Ať žije pivo!",
             "Na Ex! Na Ex!",
             "Začínáš mít slinu co?",
-            "Jedno pivo (navíc) nevadí,",
-            "Je třeba promastit,",
-            "Brousíme pilu,",
-            "Ať ti nespadne pěna,",
-            "Hladinka sem, hladinka tam,",
-            "To už nezachráníš,",
-            "Čas to prolejt šnytem,",
+            "Jedno pivo (navíc) nevadí",
+            "Je třeba promastit",
+            "Brousíme pilu",
+            "Ať ti nespadne pěna",
+            "Hladinka sem, hladinka tam",
+            "To už nezachráníš",
+            "Čas to prolejt šnytem",
             "Votáčej!",
             "To je jízda!",
-            "Ještě jedno se tam vejde,",
+            "Ještě jedno se tam vejde",
             "Pivní opojení <3",
-            "Měl bys přidat,",
+            "Měl bys přidat",
             "A ještě do druhý nohy!",
             "A ještě za babičku!",
             "Už tě brní zubý?",
             "Nečum a chlastej!",
             "Zlijem se jak dobytci!",
+            "Pivo dělá hezká těla!",
+            "Kdo nepije, nežije",
+            "Pěna je základ úspěchu",
+            "Pivo je tekutý chleba",
+            "Pivo léčí všechny bolístky",
+            "Kde je pivo, tam je domov",
+            "Pivní břicho je sexy!",
+            "Pivo, tvůj nejlepší parťák",
+            "Kdo pije pivo, žije dvakrát",
+            "Daruj pivní pusu! <3",
+            "Doplň vitamín P.",
+            "Pivo je odpověď. Co byla otázka?",
+            "Pivo tě nikdy nezradí",
+            "Pivo, důvod vstát z postele",
+            "Pivo tě obejme zevnitř",
+            "Pivo nečeká, pivo se pije!",
+            "Dáš dneska rekord?",
+            "Obejmi jí, ona ti ho přeje",
+            "Zvedáš průměr",
+            "Dneska bodne, co?",
+            "Performance condition: Spitej za 2",
+            "Škitnutí je málo piva",
+            "Je třeba napustit vanu",
+            "To pivo si zaslouží pusu",
+            "Voči pičo!",
+            "Nechť je z vody pivo!",
+            "Další pifko, bráško",
+            "Dobrá práce!",
+            "Ne, že ho zas zhltneš",
+            "Škopkujíc další kousek",
+            "Jako kdyby pršelo pivo",
+            "Pivo zahojí všechny bolístky",
+            "Škopku zdar!"
         ];
     }
 
@@ -234,10 +268,10 @@ class beersView extends WatchUi.View {
             // Show appropriate menu item
             if (index == 3 && resetSessionLabel != null) {
                 resetSessionLabel.setVisible(true);
-                (resetSessionLabel as Text).setText("Dneska končím");
+                (resetSessionLabel as Text).setText("Hoši, mizim");
             } else if (index == 4 && resetSessionHardLabel != null) {
                 resetSessionHardLabel.setVisible(true);
-                (resetSessionHardLabel as Text).setText("Smazat dnešek");
+                (resetSessionHardLabel as Text).setText("Nepamatuju");
             } else if (index == 5 && resetAllLabel != null) {
                 resetAllLabel.setVisible(true);
                 (resetAllLabel as Text).setText("Už nikdy nebudu pít!");
@@ -249,11 +283,22 @@ class beersView extends WatchUi.View {
                 drink_icon.setVisible(true);
                 (drink_icon as Bitmap).setBitmap(DRINK_ICONS[index]);
             }
-            if (messageDrawable != null && message_change) {
-                messageDrawable.setVisible(true);
-                message_change = false;
-                currentMessageIndex = Math.rand() % drunkMessages.size();
-                (messageDrawable as Text).setText(drunkMessages[currentMessageIndex]);
+            if (messageDrawable != null) {
+                var now = Time.now().value(); // Current time in seconds (Number)
+                if (message_change) {
+                    messageDrawable.setVisible(true);
+                    message_change = false;
+                    currentMessageIndex = Math.rand() % drunkMessages.size();
+                    (messageDrawable as Text).setText(drunkMessages[currentMessageIndex]);
+                    messageVisibleUntil = now + 3; // Show for 5 seconds
+                } else if (messageVisibleUntil != null && now > messageVisibleUntil) {
+                    messageDrawable.setVisible(false);
+                    messageVisibleUntil = null;
+                } else if (messageVisibleUntil != null) {
+                    messageDrawable.setVisible(true);
+                } else {
+                    messageDrawable.setVisible(false);
+                }
             }
             if (totalLabel != null) {
                 totalLabel.setVisible(true);
@@ -329,9 +374,9 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
 
     public function onKey(evt as KeyEvent) as Boolean {
         var key = evt.getKey();
-        if (key == WatchUi.KEY_ESC || key == WatchUi.KEY_BACK || key == WatchUi.KEY_MENU) {
+        if (key != WatchUi.KEY_ENTER && key != WatchUi.KEY_UP && key != WatchUi.KEY_DOWN && key != WatchUi.KEY_LIGHT) {
             System.exit();
-            return true;
+            return false;
         }
         if (key == WatchUi.KEY_ENTER) {
             if (index < 3) {
