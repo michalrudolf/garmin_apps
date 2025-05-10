@@ -376,7 +376,7 @@ class BeerStorageViewDelegate extends WatchUi.BehaviorDelegate {
         var key = evt.getKey();
         if (key != WatchUi.KEY_ENTER && key != WatchUi.KEY_UP && key != WatchUi.KEY_DOWN && key != WatchUi.KEY_LIGHT) {
             System.exit();
-            return false;
+            // Do not return on Frontrunner 256 and Fenix 7X
         }
         if (key == WatchUi.KEY_ENTER) {
             if (index < 3) {
